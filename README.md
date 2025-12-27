@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ⚡ Zappy – Mini Vendor Event Day Tracker
 
-## Getting Started
+🚀 **Live Project:** https://zappy-vendor.netlify.app/  
+🧑‍💻 Built by **Vivek Joshi** – Full Stack Developer (Internship Assessment Project)
 
-First, run the development server:
+---
+
+## 📝 Overview
+
+**Zappy** is a sophisticated web application that simulates real-life vendor operations during event days, enabling task validation through **photo verification, GPS tracking, OTP workflow, and status reporting**.
+
+Designed with a **mobile-first approach**, the UI showcases premium, high-end visuals including **Glassmorphism + Mesh Gradients + Framer Motion animations**, providing a production-grade experience.
+
+---
+
+## ✨ Core Features
+
+### 🔐 1️⃣ Secure Vendor Authentication
+- Mock authentication system
+- Login Credentials → **Username:** `zappy_vendor` | **Password:** `password123`
+
+### 📍 2️⃣ Verified Vendor Check-In
+- Captures **live Geo-Location (Lat & Long)**
+- Requires a **photo captured from device camera**
+- Logs arrival time **automatically**
+
+### 🔢 3️⃣ Dual-Stage OTP Verification
+| Stage | Code |
+|--------|--------|
+| Event Start OTP | `1234` |
+| Event End OTP | `5678` |
+
+Both are required to unlock setup phase & complete process securely.
+
+### 📸 4️⃣ Interactive Setup Progress
+- Upload **Pre-Setup** & **Post-Setup** photos
+- Add written notes / execution details
+- Smooth form progress using animated UI transitions
+
+### 🧾 5️⃣ Proof-of-Work Dashboard (WOW Page)
+- After completion, MongoDB-synced summary displays:
+  - Timestamps
+  - Image gallery (masonry layout)
+  - Verification audit trail
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Tools |
+|--------|--------|
+| Frontend | Next.js 14 (App Router), TypeScript, Tailwind CSS |
+| Animations | Framer Motion (micro-interactions + transitions) |
+| Backend | Next.js Route Handlers (Serverless APIs) |
+| Database | MongoDB + Mongoose |
+| Icons | Lucide-React |
+
+---
+
+## 🧱 Architectural Highlights
+
+- 🗄 **Base64 Image Storage** inside MongoDB  
+  → avoids extra config like S3 / Cloudinary – perfect for internship reviewers  
+- 🔁 **Stateful Wizard UI** using AnimatePresence to reduce cognitive overload  
+- 🧩 **Modular API** using one dynamic endpoint → `/api/event`  
+  - **POST** → update status & upload data  
+  - **GET** → fetch history / summary  
+- 💠 **Glassmorphism UI** using backdrop-blur + mesh gradients for enterprise polish  
+
+---
+
+## ⚙️ Local Setup & Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone project
+git clone https://github.com/your-username/zappy-tracker.git
+cd zappy-tracker
+
+# Install dependencies
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔐 Environment Variables
+Create a `.env.local` file:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+MONGODB_URI=your_mongodb_connection_string
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### ▶️ Run Development Server
+```bash
+npm run dev
+```
 
-## Learn More
+Now open 👉 http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧪 Test Credentials
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Item | Value |
+|------|-------|
+| Username | `zappy_vendor` |
+| Password | `password123` |
+| Start OTP | `1234` |
+| End OTP | `5678` |
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 👤 Author – Vivek Joshi
+Full Stack Developer  
+💼 LinkedIn — *add link here*  
+🌐 Portfolio — *add link here*  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+> Developed with ❤️ as part of the official **Zappy Internship Assessment Project**
