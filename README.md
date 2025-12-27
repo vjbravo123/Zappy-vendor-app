@@ -109,8 +109,8 @@ Now open 👉 http://localhost:3000
 
 ## 👤 Author – Vivek Joshi
 Full Stack Developer  
-💼 LinkedIn — *add link here*  
-🌐 Portfolio — *add link here*  
+💼 LinkedIn — https://www.linkedin.com/in/vivek-joshi0101/  
+🌐 Portfolio — https://techhportfolio.netlify.app/ 
 
 ---
 
