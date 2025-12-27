@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { CheckCircle2, MapPin, Clock, Camera, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 import Link from 'next/link';
 
-export default function SummaryPage() {
+// 1. Move the logic into a separate internal component
+function SummaryContent() {
   const searchParams = useSearchParams();
   const vendorId = searchParams.get('vendorId');
   const [data, setData] = useState<any>(null);
@@ -25,7 +26,7 @@ export default function SummaryPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#0F172A] text-white p-4 md:p-8 font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-[#0F172A] text-white p-4 md:p-8 font-sans relative overflow-hidden text-slate-900">
       {/* Background Glow */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/20 blur-[100px] rounded-full" />
       
@@ -40,7 +41,7 @@ export default function SummaryPage() {
           <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_0_30px_rgba(34,197,94,0.4)]">
             <CheckCircle2 size={40} className="text-white" />
           </div>
-          <h1 className="text-3xl font-black tracking-tight">Assignment Verified</h1>
+          <h1 className="text-3xl font-black tracking-tight text-white">Assignment Verified</h1>
           <p className="text-slate-400 mt-2">Vendor: <span className="text-indigo-400 font-bold">{vendorId}</span></p>
         </motion.div>
 
@@ -58,23 +59,21 @@ export default function SummaryPage() {
 
           {/* Image Masonry Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            {/* Main Arrival Photo */}
             <div className="md:col-span-2 relative h-64 rounded-3xl overflow-hidden border border-white/10 group">
                 <img src={data.checkIn?.photo} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Arrival" />
                 <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg flex items-center gap-2">
                     <Camera size={14} className="text-indigo-400" />
-                    <span className="text-[10px] font-bold uppercase">Arrival Verification</span>
+                    <span className="text-[10px] font-bold uppercase text-white">Arrival Verification</span>
                 </div>
             </div>
             
-            {/* Setup Photos */}
             <div className="relative h-48 rounded-3xl overflow-hidden border border-white/10 group">
                 <img src={data.setup?.prePhoto} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Pre" />
-                <div className="absolute top-4 left-4 bg-indigo-600 px-3 py-1 rounded-full text-[9px] font-black uppercase">Pre-Setup</div>
+                <div className="absolute top-4 left-4 bg-indigo-600 px-3 py-1 rounded-full text-[9px] font-black uppercase text-white">Pre-Setup</div>
             </div>
             <div className="relative h-48 rounded-3xl overflow-hidden border border-white/10 group">
                 <img src={data.setup?.postPhoto} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Post" />
-                <div className="absolute top-4 left-4 bg-green-600 px-3 py-1 rounded-full text-[9px] font-black uppercase">Post-Setup</div>
+                <div className="absolute top-4 left-4 bg-green-600 px-3 py-1 rounded-full text-[9px] font-black uppercase text-white">Post-Setup</div>
             </div>
           </div>
 
@@ -87,7 +86,7 @@ export default function SummaryPage() {
                     </div>
                     <div>
                         <p className="text-[10px] text-slate-500 font-bold uppercase">Venue Coordinates</p>
-                        <p className="text-sm font-bold">{data.checkIn?.location?.lat.toFixed(4)}, {data.checkIn?.location?.lng.toFixed(4)}</p>
+                        <p className="text-sm font-bold text-white">{data.checkIn?.location?.lat?.toFixed(4)}, {data.checkIn?.location?.lng?.toFixed(4)}</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -96,7 +95,7 @@ export default function SummaryPage() {
                     </div>
                     <div>
                         <p className="text-[10px] text-slate-500 font-bold uppercase">Arrival Time</p>
-                        <p className="text-sm font-bold">{new Date(data.checkIn?.timestamp).toLocaleTimeString()}</p>
+                        <p className="text-sm font-bold text-white">{new Date(data.checkIn?.timestamp).toLocaleTimeString()}</p>
                     </div>
                 </div>
             </div>
@@ -109,7 +108,7 @@ export default function SummaryPage() {
           <div className="mt-8 pt-8 border-t border-white/10 flex flex-col md:flex-row gap-4 items-center justify-between">
             <div className="flex items-center gap-2 text-green-400 bg-green-400/10 px-4 py-2 rounded-xl border border-green-400/20">
                 <ShieldCheck size={18} />
-                <span className="text-xs font-bold uppercase">Blockchain Verified Entry</span>
+                <span className="text-xs font-bold uppercase">Verified Entry</span>
             </div>
             <Link href="/" className="group flex items-center gap-2 text-indigo-400 font-black text-sm uppercase tracking-widest hover:text-white transition-colors">
                 Back to Dashboard <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -118,5 +117,18 @@ export default function SummaryPage() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+// 2. Export the main page wrapped in Suspense
+export default function SummaryPage() {
+  return (
+    <Suspense fallback={
+        <div className="min-h-screen bg-[#0F172A] flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-indigo-500"></div>
+        </div>
+    }>
+      <SummaryContent />
+    </Suspense>
   );
 }
